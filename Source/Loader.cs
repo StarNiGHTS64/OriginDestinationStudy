@@ -10,12 +10,26 @@ namespace ODStudy
     {
         public override void OnLevelLoaded(LoadMode mode)
         {
-            GameObject testGameObject = new GameObject("Test Object");
+            GameObject testGameObject = new GameObject("Z Test Object");
             testGameObject.AddComponent<ODStudyBehaviour>();
+
+            GameObject timerBus = new GameObject("Z Timer Object");
+            timerBus.AddComponent<Timer>();
+
+            GameObject startPoint = new GameObject("Z Start Point");
+
+            GameObject endGoal = new GameObject("Z End Goal");
+
+            GameObject spawnPoint = new GameObject("Z Spawn Point");
+
+            GameObject busDataHandler = new GameObject("Z Bus Data Handler");
+
+            GameObject generalDataHandler = new GameObject("Z General Data Handler");
+            generalDataHandler.AddComponent<GeneralDataHandler>();
 
             //This get the default UIView
             UIView view = UIView.GetAView();
-
+            
             //This adds an UIComponent to the view
 
             //GUI Components from Bus State

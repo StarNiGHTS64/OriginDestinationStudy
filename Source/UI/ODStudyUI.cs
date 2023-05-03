@@ -46,11 +46,15 @@ namespace ODStudy
 
     class StateText : UILabel
     {
+        public GameObject carState;
+
         String stateText = " ";
         bool onGoing;
 
         public override void Start()
         {
+            carState = GameObject.Find("Z General Data Handler");
+
             onGoing = true;
             this.text = stateText;
             this.height = 30;
@@ -60,13 +64,15 @@ namespace ODStudy
 
         public override void Update()
         {
+            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
+
             if (onGoing)
             {
                 stateText = "En Camino...";
             }
             else
             {
-                stateText = "En Espera";
+                stateText = "En Espera...";
             }
 
             this.text = stateText;
@@ -75,9 +81,13 @@ namespace ODStudy
 
     class StateHightLight : UIButton
     {
+        public GameObject carState;
+
         bool onGoing;
         public override void Start()
         {
+            carState = GameObject.Find("Z General Data Handler");
+
             onGoing = true;
 
             this.isInteractive = true;
@@ -94,22 +104,28 @@ namespace ODStudy
 
         public override void Update()
         {
+            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
+
             if (onGoing)
             {
                 this.color = new Color32(255, 255, 255, 255);
             }
             else
             {
-                this.color = new Color32(255, 0, 255, 255);
+                this.color = new Color32(126, 0, 255, 255);
             }
         }
     }
 
     class StateLight : UIButton
     {
+        public GameObject carState;
+
         bool onGoing;
         public override void Start()
         {
+            carState = GameObject.Find("Z General Data Handler");
+
             onGoing = true;
 
             this.isInteractive = true;
@@ -126,6 +142,8 @@ namespace ODStudy
 
         public override void Update()
         {
+            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
+
             if (onGoing)
             {
                 this.color = new Color32(0, 255, 255, 255);
@@ -193,10 +211,14 @@ namespace ODStudy
         }
     }
 
-    class StopButton : UIButton
+    public class StopButton : UIButton
     {
+        public GameObject timer;
+
         public override void Start()
         {
+            timer = GameObject.Find("Z Timer Object");
+            
             this.isInteractive = true;
             this.color = new Color32(255, 0, 0, 255);
 
@@ -222,6 +244,8 @@ namespace ODStudy
             this.focusedTextColor = new Color32(255, 255, 255, 255);
             this.pressedTextColor = new Color32(30, 30, 44, 255);
 
+            this.eventClick += ButtonClick;
+
 
             //Enable button sounds
             this.playAudioEvents = true;
@@ -229,6 +253,12 @@ namespace ODStudy
             //Place the button
             //this.transformPosition = new Vector3(-1.65f, 0.97f);
             this.relativePosition = new Vector3(10, 60);
+        }
+
+        public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            timer.GetComponent<Timer>().timeIsRunnig = false;
+            Debug.Log("Hey Look at Me Im a Stop");
         }
 
         public override void Update()
@@ -266,6 +296,7 @@ namespace ODStudy
             this.focusedTextColor = new Color32(255, 255, 255, 255);
             this.pressedTextColor = new Color32(30, 30, 44, 255);
 
+            this.eventClick += ButtonClick;
 
             //Enable button sounds
             this.playAudioEvents = true;
@@ -273,6 +304,11 @@ namespace ODStudy
             //Place the button
             //this.transformPosition = new Vector3(-1.65f, 0.97f);
             this.relativePosition = new Vector3(70, 60);
+        }
+
+        public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            Debug.Log("Hey Look at Me Im a Clear");
         }
 
         public override void Update()
@@ -283,8 +319,12 @@ namespace ODStudy
 
     class SpawnButton : UIButton
     {
+        public GameObject timer;
+
         public override void Start()
         {
+            timer = GameObject.Find("Z Timer Object");
+
             this.isInteractive = true;
             this.color = new Color32(0, 255, 0, 255);
 
@@ -310,6 +350,8 @@ namespace ODStudy
             this.focusedTextColor = new Color32(255, 255, 255, 255);
             this.pressedTextColor = new Color32(30, 30, 44, 255);
 
+            this.eventClick += ButtonClick;
+
 
             //Enable button sounds
             this.playAudioEvents = true;
@@ -317,6 +359,12 @@ namespace ODStudy
             //Place the button
             //this.transformPosition = new Vector3(-1.65f, 0.97f);
             this.relativePosition = new Vector3(130, 60);
+        }
+
+        public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            timer.GetComponent<Timer>().timeIsRunnig = true;
+            Debug.Log("Hey Look at Me Im a Spawn");
         }
 
         public override void Update()
@@ -366,11 +414,14 @@ namespace ODStudy
 
     class TimerTime : UILabel
     {
-        int seconds, secondsUnit, secondsDec, minutesUnit, minutesDec;
+        public GameObject timerBus;
+
+        int secondsUnit, secondsDec, minutesUnit, minutesDec;
 
         public override void Start()
         {
-            seconds = 0;
+            timerBus = GameObject.Find("Z General Data Handler");
+
             secondsUnit = 0;
             secondsDec = 0;
             minutesUnit = 0;
@@ -386,6 +437,13 @@ namespace ODStudy
 
         public override void Update()
         {
+            
+            secondsUnit = timerBus.GetComponent<GeneralDataHandler>().secondSecond;
+            secondsDec = timerBus.GetComponent<GeneralDataHandler>().firstSecond;
+            minutesUnit = timerBus.GetComponent<GeneralDataHandler>().secondMinute;
+            minutesDec = timerBus.GetComponent<GeneralDataHandler>().firstMinute;
+            
+
             this.text = minutesDec.ToString() + minutesUnit.ToString() + ":" + secondsDec.ToString() + secondsUnit.ToString(); ;
         }
     }
