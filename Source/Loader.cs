@@ -17,6 +17,7 @@ namespace ODStudy
             timerBus.AddComponent<Timer>();
 
             GameObject startPoint = new GameObject("Z Start Point");
+            startPoint.AddComponent<StartPoint>();
 
             GameObject endGoal = new GameObject("Z End Goal");
 
