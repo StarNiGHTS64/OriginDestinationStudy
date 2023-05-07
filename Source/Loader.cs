@@ -16,12 +16,14 @@ namespace ODStudy
             GameObject timerBus = new GameObject("Z Timer Object");
             timerBus.AddComponent<Timer>();
 
-            GameObject startPoint = new GameObject("Z Start Point");
+            GameObject positionManager = new GameObject("Z Position Manager");
+            positionManager.AddComponent<PositionManager>();
 
             GameObject endGoal = new GameObject("Z End Goal");
+            endGoal.AddComponent<EndGoal>();
 
-            GameObject spawnPoint = new GameObject("Z Spawn Point");
-            spawnPoint.AddComponent<StartPoint>();
+            GameObject startPoint = new GameObject("Z Start Point");
+            startPoint.AddComponent<StartPoint>();
 
             GameObject busDataHandler = new GameObject("Z Bus Data Handler");
 
