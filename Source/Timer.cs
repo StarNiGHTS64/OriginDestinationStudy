@@ -28,7 +28,7 @@ namespace ODStudy
 
        void Start()
        {
-            timeIsRunnig = true;
+            timeIsRunnig = false;
             ResetTimer();
        }
 
