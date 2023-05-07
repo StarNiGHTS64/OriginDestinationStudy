@@ -308,7 +308,8 @@ namespace ODStudy
 
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            Debug.Log("Hey Look at Me Im a Clear");
+            //random = GetRandomCitizen();
+            //Debug.Log("Hey Look at Me Im a Clear");
         }
 
         public override void Update()

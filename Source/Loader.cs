@@ -21,6 +21,7 @@ namespace ODStudy
             GameObject endGoal = new GameObject("Z End Goal");
 
             GameObject spawnPoint = new GameObject("Z Spawn Point");
+            spawnPoint.AddComponent<StartPoint>();
 
             GameObject busDataHandler = new GameObject("Z Bus Data Handler");
 
