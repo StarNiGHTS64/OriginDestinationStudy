@@ -47,7 +47,9 @@ namespace ODStudy
         {
             InstanceManager instance = Singleton<InstanceManager>.instance;
             BuildingManager instance2 = Singleton<BuildingManager>.instance;
-            for (ushort num = 1; num < 49152; num += 1)
+            uint totalBuildings = instance2.m_buildings.m_size;
+
+            for (ushort num = 1; num < totalBuildings; num ++)
             {
                 if ((instance2.m_buildings.m_buffer[(int)num].m_flags & Building.Flags.CustomName) != Building.Flags.None && instance.GetName(new InstanceID
                 {
