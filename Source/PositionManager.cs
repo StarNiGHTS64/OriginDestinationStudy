@@ -49,6 +49,15 @@ namespace ODStudy
             BuildingManager instance2 = Singleton<BuildingManager>.instance;
             uint totalBuildings = instance2.m_buildings.m_size;
 
+            //VehicleManager instance3 = Singleton<VehicleManager>.instance;
+            /*if(instance3.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+            {
+                getPosition
+                Compare it to the star position 
+            }*/
+            //instance3.m_vehicles.m_buffer[num].GetInstanceID();
+            //instance.SetName(instancedID id, string newName);
+
             for (ushort num = 1; num < totalBuildings; num ++)
             {
                 if ((instance2.m_buildings.m_buffer[(int)num].m_flags & Building.Flags.CustomName) != Building.Flags.None && instance.GetName(new InstanceID
@@ -86,6 +95,11 @@ namespace ODStudy
             return position2;
         }
 
+        public void assignDestination()
+        {
+
+        }
+
         public bool hasArriveYet()
         {
             busNum = GetVehicleIDByCustomName("TargetBus");
@@ -101,6 +115,22 @@ namespace ODStudy
             Debug.Log("Bus Position: " + busPosition);
 
             return (goalPosition - busPosition).magnitude <= 40f;
+        }
+
+        public void cleanTraffic()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size; ;
+
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort i = 1; i < totalVehicles; i++)
+            {
+                instance.ReleaseVehicle(i);
+            }
         }
 
         public void reRespawn(ushort vehicleID)
