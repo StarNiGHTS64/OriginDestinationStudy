@@ -57,9 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\BusDataHandler.cs" />
+    <Compile Include="Source\DisableUnusedFeatures.cs" />
     <Compile Include="Source\EndGoal.cs" />
     <Compile Include="Source\GeneralDataHandler.cs" />
-    <Compile Include="Source\SpawnPoint.cs" />
+    <Compile Include="Source\PositionManager.cs" />
     <Compile Include="Source\StartPoint.cs" />
     <Compile Include="Source\Timer.cs" />
     <Compile Include="Source\Loader.cs" />

@@ -30,6 +30,9 @@ namespace ODStudy
             GameObject generalDataHandler = new GameObject("Z General Data Handler");
             generalDataHandler.AddComponent<GeneralDataHandler>();
 
+            GameObject disableUnusedFeatures = new GameObject("Z Disable");
+            disableUnusedFeatures.AddComponent<DisableUnusedFeatures>();
+
             //This get the default UIView
             UIView view = UIView.GetAView();
             
