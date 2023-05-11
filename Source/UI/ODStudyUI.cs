@@ -1,6 +1,7 @@
 ﻿using System;
 using ICities;
 using UnityEngine;
+using ColossalFramework;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
 
@@ -269,6 +270,7 @@ namespace ODStudy
 
     class ClearButton : UIButton
     {
+
         public override void Start()
         {
             this.isInteractive = true;
@@ -306,10 +308,27 @@ namespace ODStudy
             this.relativePosition = new Vector3(70, 60);
         }
 
+        public void cleanTraffic()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size; ;
+
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort i = 1; i < totalVehicles; i++)
+            {
+                instance.ReleaseVehicle(i);
+            }
+        }
+
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
             //random = GetRandomCitizen();
             //Debug.Log("Hey Look at Me Im a Clear");
+            cleanTraffic();
         }
 
         public override void Update()
