@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ICities;
 using UnityEngine;
 using ColossalFramework;
@@ -383,8 +384,33 @@ namespace ODStudy
 
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            timer.GetComponent<Timer>().timeIsRunnig = true;
-            Debug.Log("Hey Look at Me Im a Spawn");
+            assignName();
+            //timer.GetComponent<Timer>().timeIsRunnig = true;
+            //Debug.Log("Hey Look at Me Im a Spawn");
+        }
+
+        public void assignName()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size; 
+
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort num = 1; num < totalVehicles; num++)
+                if (instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+                {
+                    Vehicle.Flags flags = instance.m_vehicles.m_buffer[(int)num].m_flags;
+                    //instance.m_vehicles.m_buffer[num].m_flags.SetFlags(Vehicle.Flags.CustomName, true);
+                    instance.m_vehicles.m_buffer[(int)num].m_flags = (flags | Vehicle.Flags.CustomName);
+                    InstanceID id = default(InstanceID);
+                    id.Vehicle = num;
+                    Singleton<InstanceManager>.instance.SetName(id, "Foo");
+                    Debug.Log("Hi i am a bus: " + num);
+                    //Debug.Log("Result: " + instance.SetVehicleName(num, "foo"));
+                }
         }
 
         public override void Update()

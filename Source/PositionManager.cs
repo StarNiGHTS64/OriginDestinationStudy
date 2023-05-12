@@ -22,7 +22,7 @@ namespace ODStudy
 
         void Start()
         {
-
+            //assignDestination();
         }
 
         public ushort GetVehicleIDByCustomName(string name)
@@ -49,14 +49,6 @@ namespace ODStudy
             BuildingManager instance2 = Singleton<BuildingManager>.instance;
             uint totalBuildings = instance2.m_buildings.m_size;
 
-            //VehicleManager instance3 = Singleton<VehicleManager>.instance;
-            /*if(instance3.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
-            {
-                getPosition
-                Compare it to the star position 
-            }*/
-            //instance3.m_vehicles.m_buffer[num].GetInstanceID();
-            //instance.SetName(instancedID id, string newName);
 
             for (ushort num = 1; num < totalBuildings; num ++)
             {
@@ -97,7 +89,27 @@ namespace ODStudy
 
         public void assignDestination()
         {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size; ;
 
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort num = 1; num < totalVehicles; num ++)
+                if(instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+                {
+
+                    //getPosition
+                    //Compare it to the star position 
+                    //ushort instanceID = instance.m_vehicles.m_buffer[num].GetInstanceID();
+                    //bool result = vehicleData.Info.m_vehicleAI.SetVehicleName(num, ref vehicleData, "TargetBus");
+                    Debug.Log("Hi i am a bus: " + num);
+                    Debug.Log("Result: " + instance.SetVehicleName(num, "foo"));
+                }
+            
+            //
         }
 
         public bool hasArriveYet()
@@ -110,9 +122,9 @@ namespace ODStudy
             GetBuildingPosition(goalNum, out goalPosition);
             GetVehiclePosition(busNum, out busPosition);
 
-            Debug.Log("Start Position: " + busDepotPosition);
-            Debug.Log("Goal Position: " + goalPosition);
-            Debug.Log("Bus Position: " + busPosition);
+            //Debug.Log("Start Position: " + busDepotPosition);
+            //Debug.Log("Goal Position: " + goalPosition);
+            //Debug.Log("Bus Position: " + busPosition);
 
             return (goalPosition - busPosition).magnitude <= 40f;
         }
@@ -157,8 +169,9 @@ namespace ODStudy
             if(hasArriveYet() && !respowneded)
             {
                 busNum = GetVehicleIDByCustomName("TargetBus");
-                reRespawn(busNum);
                 respowneded = true;
+                reRespawn(busNum);
+                
             }
         }
     }
