@@ -413,6 +413,16 @@ namespace ODStudy
                 }
         }
 
+        public void changeTargetBuilding(ushort vehicleId, ushort buildingId)
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            BuildingManager instance2 = Singleton<BuildingManager>.instance;
+             
+            Vehicle vehicleData = instance.m_vehicles.m_buffer[vehicleId];
+
+            //vehicleData.SetTarget(buildingId);
+        }
+
         public override void Update()
         {
 
