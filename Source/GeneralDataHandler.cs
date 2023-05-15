@@ -23,6 +23,11 @@ namespace ODStudy
         [SerializeField]
         public bool timeIsRunnig;
 
+        [SerializeField]
+        public ushort stage;
+        [SerializeField]
+        public float simulationSpeed;
+
         /*-------------------------- Bus ----------------------------------------*/
 
         /*-------------------------- Spawn Point --------------------------------*/

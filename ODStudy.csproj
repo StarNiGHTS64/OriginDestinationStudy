@@ -66,6 +66,7 @@
     <Compile Include="Source\Loader.cs" />
     <Compile Include="Source\ODStudy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\UI\FinalPanelUI.cs" />
     <Compile Include="Source\UI\ODStudyUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
