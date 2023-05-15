@@ -93,6 +93,8 @@ namespace ODStudy
 
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
+            currentStage++;
+            generalData.GetComponent<GeneralDataHandler>().StageHandler(currentStage);
             Debug.Log("Hey Look at Me Im a Next");
         }
     }
@@ -139,6 +141,7 @@ namespace ODStudy
 
         public void TestClick(UIComponent component, UIMouseEventParameter eventParam)
         {
+
             Debug.Log("Hey Look at Me Im a Test");
         }
     }

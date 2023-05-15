@@ -36,6 +36,51 @@ namespace ODStudy
 
         /*-------------------------- End Goal -----------------------------------*/
 
+        public void StageHandler(ushort stage)
+        {
+            switch (stage)
+            {
+                case 0:
+                    Debug.Log("Current Stage 0");
+                    SimulationManager.instance.SimulationPaused = true;
+                    break;
+
+                case 1:
+                    Debug.Log("Current Stage 1");
+                    SimulationManager.instance.SimulationPaused = false;
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+                case 4:
+                    break;
+
+                case 5:
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                case 8:
+                    break;
+
+                case 9:
+                    break;
+                    
+                case 10:
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         public void Start()
         {
