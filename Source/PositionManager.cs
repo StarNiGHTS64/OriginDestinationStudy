@@ -112,6 +112,15 @@ namespace ODStudy
             //
         }
 
+        public void removeCustomName()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            Debug.Log("ID: " + busNum);
+            Vehicle.Flags flags = instance.m_vehicles.m_buffer[busNum].m_flags;
+            instance.m_vehicles.m_buffer[busNum].m_flags = (flags & ~Vehicle.Flags.CustomName);
+            //instance.SetVehicleName(busNum, "Bus");
+        }
+
         public bool hasArriveYet()
         {
             busNum = GetVehicleIDByCustomName("TargetBus");
@@ -122,9 +131,10 @@ namespace ODStudy
             GetBuildingPosition(goalNum, out goalPosition);
             GetVehiclePosition(busNum, out busPosition);
 
-            //Debug.Log("Start Position: " + busDepotPosition);
-            //Debug.Log("Goal Position: " + goalPosition);
-            //Debug.Log("Bus Position: " + busPosition);
+            Debug.Log("Start Position: " + busDepotPosition);
+            Debug.Log("Goal Position: " + goalPosition);
+            
+            Debug.Log("Bus Position: " + busPosition);
 
             return (goalPosition - busPosition).magnitude <= 40f;
         }
@@ -166,13 +176,13 @@ namespace ODStudy
         void Update()
         {
             //Debug.Log("Has Arrived?: " + hasArriveYet());
-            if(hasArriveYet() && !respowneded)
+            /*if(hasArriveYet() && !respowneded)
             {
                 busNum = GetVehicleIDByCustomName("TargetBus");
                 respowneded = true;
                 reRespawn(busNum);
                 
-            }
+            }*/
         }
     }
 

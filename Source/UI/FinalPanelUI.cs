@@ -41,6 +41,7 @@ namespace ODStudy
         }
         public override void Update()
         {
+            currentStage = generalData.GetComponent<GeneralDataHandler>().stage;
             this.text = currentStage.ToString();
 
         }
@@ -91,11 +92,25 @@ namespace ODStudy
             this.relativePosition = new Vector3(10, 60);
         }
 
+
+
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            currentStage++;
-            generalData.GetComponent<GeneralDataHandler>().StageHandler(currentStage);
-            Debug.Log("Hey Look at Me Im a Next");
+            Debug.Log("I AM: " + currentStage);
+            switch (currentStage)
+            {
+                case 0:
+                    generalData.GetComponent<GeneralDataHandler>().stage++;
+                    currentStage = generalData.GetComponent<GeneralDataHandler>().stage;
+                    generalData.GetComponent<GeneralDataHandler>().StageHandler(currentStage);
+                    Debug.Log("Stage: " + (currentStage) + " to " + (currentStage + 1));
+                    break;
+
+                default:
+                    Debug.Log("Cannot Change Stage Right Now");
+                    break;
+            }
+            Debug.Log("NOW I AM: " + currentStage);
         }
     }
 

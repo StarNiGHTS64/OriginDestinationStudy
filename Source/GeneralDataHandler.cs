@@ -10,6 +10,7 @@ namespace ODStudy
     {
         /*-------------------------- Timer --------------------------------------*/
         public GameObject timerBus;
+        public GameObject positionManager;
         public Component timerBusValues;
 
         [SerializeField]
@@ -26,7 +27,11 @@ namespace ODStudy
         [SerializeField]
         public ushort stage;
         [SerializeField]
+        public bool simulationState;
+        [SerializeField]
         public float simulationSpeed;
+
+        public bool hasArrived = false;
 
         /*-------------------------- Bus ----------------------------------------*/
 
@@ -41,16 +46,19 @@ namespace ODStudy
             switch (stage)
             {
                 case 0:
-                    Debug.Log("Current Stage 0");
-                    SimulationManager.instance.SimulationPaused = true;
+                    //Debug.Log("Current Stage 0");
+                    simulationState = true;
                     break;
 
                 case 1:
-                    Debug.Log("Current Stage 1");
-                    SimulationManager.instance.SimulationPaused = false;
+                    //Debug.Log("Current Stage 1");
+
+                    simulationState = false;
                     break;
 
                 case 2:
+                    Debug.Log("Current Stage 2");
+                    simulationState = true;
                     break;
 
                 case 3:
@@ -84,13 +92,27 @@ namespace ODStudy
 
         public void Start()
         {
-            timerBus = GameObject.Find("Z Timer Object"); 
-
+            timerBus = GameObject.Find("Z Timer Object");
+            positionManager = GameObject.Find("Z Position Manager");
+            StageHandler(stage);
         }
 
         public void Update()
         {
-            
+            SimulationManager.instance.SimulationPaused = simulationState;
+
+            if (stage == 1)
+            {
+                hasArrived = positionManager.GetComponent<PositionManager>().hasArriveYet();
+                if (hasArrived)
+                {
+                    Debug.Log("The bus has arrived");
+                    positionManager.GetComponent<PositionManager>().removeCustomName();
+                    stage++;
+                    StageHandler(stage);
+                }
+            }
+
             firstMinute = timerBus.GetComponent<Timer>().firstMinute;
             secondMinute = timerBus.GetComponent<Timer>().secondMinute;
             firstSecond = timerBus.GetComponent<Timer>().firstSecond;
