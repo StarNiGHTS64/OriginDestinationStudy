@@ -1,8 +1,10 @@
 ﻿using System;
 using ICities;
 using UnityEngine;
+using ColossalFramework;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
+using System.Reflection;
 
 namespace ODStudy
 {
@@ -12,6 +14,8 @@ namespace ODStudy
         public GameObject timerBus;
         public GameObject positionManager;
         public Component timerBusValues;
+
+        private FieldInfo simulationSpeedField;
 
         [SerializeField]
         public int firstMinute;
@@ -33,16 +37,9 @@ namespace ODStudy
 
         public bool hasArrived = false;
 
-        /*-------------------------- Bus ----------------------------------------*/
-
-        /*-------------------------- Spawn Point --------------------------------*/
-
-        /*-------------------------- Start Point --------------------------------*/
-
-        /*-------------------------- End Goal -----------------------------------*/
-
         public void StageHandler(ushort stage)
         {
+            
             positionManager = GameObject.Find("Z Position Manager");
             switch (stage)
             {
@@ -71,6 +68,8 @@ namespace ODStudy
                     break;
 
                 case 5:
+                    simulationState = false;
+                    simulationSpeed = 6;
                     break;
 
                 case 6:
@@ -90,6 +89,18 @@ namespace ODStudy
 
                 default:
                     break;
+            }
+        }
+
+        public void ChangeSimulationSpeed()
+        {
+            if(Singleton<SimulationManager>.exists)
+
+            {
+                Singleton<SimulationManager>.instance.AddAction(delegate ()
+                {
+                    Singleton<SimulationManager>.instance.SelectedSimulationSpeed = 6;
+                });
             }
         }
 
@@ -114,6 +125,10 @@ namespace ODStudy
                     stage++;
                     StageHandler(stage);
                 }
+            }
+            if (stage == 5)
+            {
+                ChangeSimulationSpeed();
             }
 
             firstMinute = timerBus.GetComponent<Timer>().firstMinute;
