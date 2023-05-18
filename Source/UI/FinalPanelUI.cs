@@ -102,6 +102,7 @@ namespace ODStudy
             {
                 case 0:
                 case 2:
+                case 3:
                     generalData.GetComponent<GeneralDataHandler>().stage++;
                     currentStage = generalData.GetComponent<GeneralDataHandler>().stage;
                     generalData.GetComponent<GeneralDataHandler>().StageHandler(currentStage);

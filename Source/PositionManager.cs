@@ -200,6 +200,40 @@ namespace ODStudy
             Singleton<VehicleManager>.instance.ReleaseVehicle(vehicleData.m_vehicle);*/
         }
 
+        public void CleanTraffic()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size;
+
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort i = 1; i < totalVehicles; i++)
+            {
+                instance.ReleaseVehicle(i);
+            }
+        }
+
+        /*public void CleanParked()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalParked = instance.m_parkedVehicles.m_size;
+
+            if (totalParked == 0)
+            {
+                return;
+            }
+
+            for(ushort i = 1; i < totalParked; i++)
+            {
+              
+            }
+        }*/
+
+
+
         void Update()
         {
             //Debug.Log("Has Arrived?: " + hasArriveYet());

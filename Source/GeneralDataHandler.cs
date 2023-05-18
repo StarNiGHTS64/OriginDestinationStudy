@@ -64,11 +64,10 @@ namespace ODStudy
 
                 case 3:
                     positionManager.GetComponent<PositionManager>().GetSegmentByName("DestroyMe");
-                    stage++;
                     break;
 
                 case 4:
-
+                    positionManager.GetComponent<PositionManager>().CleanTraffic();
                     break;
 
                 case 5:
