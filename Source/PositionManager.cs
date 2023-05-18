@@ -131,14 +131,41 @@ namespace ODStudy
             GetBuildingPosition(goalNum, out goalPosition);
             GetVehiclePosition(busNum, out busPosition);
 
-            Debug.Log("Start Position: " + busDepotPosition);
-            Debug.Log("Goal Position: " + goalPosition);
-            
-            Debug.Log("Bus Position: " + busPosition);
+            /*Debug.Log("Start Position: " + busDepotPosition);
+            Debug.Log("Goal Position: " + goalPosition);  
+            Debug.Log("Bus Position: " + busPosition);*/
 
             return (goalPosition - busPosition).magnitude <= 40f;
         }
 
+        public void BulldozeStreets()
+        {
+            NetManager instance = Singleton<NetManager>.instance;
+            uint totalSegments = instance.m_segments.m_size;
+
+            if (totalSegments == 0)
+            {
+                return;
+            }
+
+            
+        }
+
+        public void GetSegmentByName(string segmentName)
+        {
+            for (ushort num = 0; num < Singleton<NetManager>.instance.m_segments.m_size; num++)
+            {
+                if (Singleton<NetManager>.instance.m_segments.m_buffer[num].m_flags != NetSegment.Flags.None && Singleton<NetManager>.instance.GetSegmentName(num) == segmentName)
+                {
+                    //Debug.Log("Hi I" + num + " am a Segment");
+                    BulldozeSegment(num);
+                }
+            }
+        }
+        public static void BulldozeSegment(ushort segmentID)
+        {
+            Singleton<NetManager>.instance.ReleaseSegment(segmentID, false);
+        }
 
         public void reRespawn(ushort vehicleID)
         {

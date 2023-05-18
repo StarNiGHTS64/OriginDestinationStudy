@@ -43,6 +43,7 @@ namespace ODStudy
 
         public void StageHandler(ushort stage)
         {
+            positionManager = GameObject.Find("Z Position Manager");
             switch (stage)
             {
                 case 0:
@@ -57,14 +58,17 @@ namespace ODStudy
                     break;
 
                 case 2:
-                    Debug.Log("Current Stage 2");
+                    //Debug.Log("Current Stage 2");
                     simulationState = true;
                     break;
 
                 case 3:
+                    positionManager.GetComponent<PositionManager>().GetSegmentByName("DestroyMe");
+                    stage++;
                     break;
 
                 case 4:
+
                     break;
 
                 case 5:

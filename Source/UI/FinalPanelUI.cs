@@ -92,18 +92,20 @@ namespace ODStudy
             this.relativePosition = new Vector3(10, 60);
         }
 
-
+        
 
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
             Debug.Log("I AM: " + currentStage);
+            currentStage = generalData.GetComponent<GeneralDataHandler>().stage;
             switch (currentStage)
             {
                 case 0:
+                case 2:
                     generalData.GetComponent<GeneralDataHandler>().stage++;
                     currentStage = generalData.GetComponent<GeneralDataHandler>().stage;
                     generalData.GetComponent<GeneralDataHandler>().StageHandler(currentStage);
-                    Debug.Log("Stage: " + (currentStage) + " to " + (currentStage + 1));
+                    Debug.Log("Stage: " + (currentStage - 1) + " to " + (currentStage));
                     break;
 
                 default:
@@ -156,8 +158,8 @@ namespace ODStudy
 
         public void TestClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-
             Debug.Log("Hey Look at Me Im a Test");
         }
+
     }
 }
