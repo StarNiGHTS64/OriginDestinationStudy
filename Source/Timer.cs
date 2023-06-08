@@ -4,7 +4,7 @@ using UnityEngine;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
 
-namespace ODStudy
+namespace ODStudyF
 {
     public class Timer : MonoBehaviour
     {
@@ -26,11 +26,11 @@ namespace ODStudy
         public bool timeIsRunnig;
 
 
-       void Start()
-       {
+        void Start()
+        {
             timeIsRunnig = false;
             ResetTimer();
-       }
+        }
 
         void Update()
         {
@@ -38,12 +38,13 @@ namespace ODStudy
             {
                 timer += Time.deltaTime;
 
-            } else
+            }
+            else
             {
                 ResetTimer();
             }
             UpdateTimerDisplay(timer);
-            
+
         }
 
         public void ResetTimer()

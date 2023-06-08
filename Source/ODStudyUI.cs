@@ -6,7 +6,7 @@ using ColossalFramework;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
 
-namespace ODStudy
+namespace ODStudyF
 {
     /*----------------------- State -----------------------*/
     class StatePanel : UIPanel
@@ -51,13 +51,12 @@ namespace ODStudy
         public GameObject carState;
 
         String stateText = " ";
-        bool onGoing;
+        int busState;
 
         public override void Start()
         {
             carState = GameObject.Find("Z General Data Handler");
 
-            onGoing = true;
             this.text = stateText;
             this.height = 30;
             this.width = 160;
@@ -66,15 +65,34 @@ namespace ODStudy
 
         public override void Update()
         {
-            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
 
-            if (onGoing)
+            busState = carState.GetComponent<GeneralDataHandler>().busState;
+
+            switch (busState)
             {
-                stateText = "En Camino...";
-            }
-            else
-            {
-                stateText = "En Espera...";
+                case 0:
+                    stateText = "En Espera...";
+                    break;
+
+                case 1:
+                    stateText = "En Camino...";
+                    break;
+
+                case 2:
+                    stateText = "Llego a Meta";
+                    break;
+
+                case 3:
+                    stateText = "No Disponible";
+                    break;
+
+                case 4:
+                    stateText = "Buscando...";
+                    break;
+
+                default:
+                    stateText = "En Espera...";
+                    break;
             }
 
             this.text = stateText;
@@ -85,12 +103,10 @@ namespace ODStudy
     {
         public GameObject carState;
 
-        bool onGoing;
+        int busState;
         public override void Start()
         {
             carState = GameObject.Find("Z General Data Handler");
-
-            onGoing = true;
 
             this.isInteractive = true;
             this.color = new Color32(255, 255, 255, 255);
@@ -106,15 +122,33 @@ namespace ODStudy
 
         public override void Update()
         {
-            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
+            busState = carState.GetComponent<GeneralDataHandler>().busState;
 
-            if (onGoing)
+            switch (busState)
             {
-                this.color = new Color32(255, 255, 255, 255);
-            }
-            else
-            {
-                this.color = new Color32(126, 0, 255, 255);
+                case 0:
+                    this.color = new Color32(255, 255, 0, 255);
+                    break;
+
+                case 1:
+                    this.color = new Color32(0, 0, 255, 255);
+                    break;
+
+                case 2:
+                    this.color = new Color32(0, 255, 0, 255);
+                    break;
+
+                case 3:
+                    this.color = new Color32(255, 0, 0, 255);
+                    break;
+
+                case 4:
+                    this.color = new Color32(255, 255, 255, 255);
+                    break;
+
+                default:
+                    this.color = new Color32(255, 255, 255, 255);
+                    break;
             }
         }
     }
@@ -123,12 +157,10 @@ namespace ODStudy
     {
         public GameObject carState;
 
-        bool onGoing;
+        int busState;
         public override void Start()
         {
             carState = GameObject.Find("Z General Data Handler");
-
-            onGoing = true;
 
             this.isInteractive = true;
             this.color = new Color32(255, 255, 255, 255);
@@ -144,15 +176,33 @@ namespace ODStudy
 
         public override void Update()
         {
-            onGoing = carState.GetComponent<GeneralDataHandler>().timeIsRunnig;
+            busState = carState.GetComponent<GeneralDataHandler>().busState;
 
-            if (onGoing)
+            switch (busState)
             {
-                this.color = new Color32(0, 255, 255, 255);
-            }
-            else
-            {
-                this.color = new Color32(255, 0, 0, 255);
+                case 0:
+                    this.color = new Color32(255, 255, 0, 255);
+                    break;
+
+                case 1:
+                    this.color = new Color32(0, 0, 255, 255);
+                    break;
+
+                case 2:
+                    this.color = new Color32(0, 255, 0, 255);
+                    break;
+
+                case 3:
+                    this.color = new Color32(255, 0, 0, 255);
+                    break;
+
+                case 4:
+                    this.color = new Color32(255, 255, 255, 255);
+                    break;
+
+                default:
+                    this.color = new Color32(255, 255, 255, 255);
+                    break;
             }
         }
     }
@@ -209,7 +259,7 @@ namespace ODStudy
 
         public override void Update()
         {
-        
+
         }
     }
 
@@ -220,7 +270,7 @@ namespace ODStudy
         public override void Start()
         {
             timer = GameObject.Find("Z Timer Object");
-            
+
             this.isInteractive = true;
             this.color = new Color32(255, 0, 0, 255);
 
@@ -309,7 +359,7 @@ namespace ODStudy
             this.relativePosition = new Vector3(70, 60);
         }
 
-    
+
 
         public void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
@@ -346,7 +396,7 @@ namespace ODStudy
             this.normalBgSprite = "IconPolicyBaseCircle";
             this.disabledBgSprite = "IconPolicyBaseCircleDisabled";
             this.hoveredBgSprite = "IconPolicyBaseCircleFocused";
-            this.focusedBgSprite = "IconPolicyBaseCircleHovered"; 
+            this.focusedBgSprite = "IconPolicyBaseCircleHovered";
             this.pressedBgSprite = "IconPolicyBaseCirclePressed";
 
             this.tooltip = "Start";
@@ -378,7 +428,7 @@ namespace ODStudy
         public void AssignName()
         {
             VehicleManager instance = Singleton<VehicleManager>.instance;
-            uint totalVehicles = instance.m_vehicles.m_size; 
+            uint totalVehicles = instance.m_vehicles.m_size;
 
             if (totalVehicles == 0)
             {
@@ -395,7 +445,6 @@ namespace ODStudy
                     id.Vehicle = num;
                     Singleton<InstanceManager>.instance.SetName(id, "Foo");
                     Debug.Log("Hi i am a bus: " + num);
-                    //Debug.Log("Result: " + instance.SetVehicleName(num, "foo"));
                 }
         }
 
@@ -449,6 +498,7 @@ namespace ODStudy
         public GameObject timerBus;
 
         int secondsUnit, secondsDec, minutesUnit, minutesDec;
+        float time = 0;
 
         public override void Start()
         {
@@ -467,16 +517,26 @@ namespace ODStudy
 
         }
 
+        public void UpdateTimerDisplay(float time)
+        {
+            float minutes = Mathf.FloorToInt(time / 60);
+            float seconds = Mathf.FloorToInt(time % 60);
+
+            minutesDec = Mathf.FloorToInt(minutes / 10);
+            minutesUnit = Mathf.FloorToInt(minutes % 10);
+            secondsDec = Mathf.FloorToInt(seconds / 10);
+            secondsUnit = Mathf.FloorToInt(seconds % 10);
+
+        }
+
         public override void Update()
         {
-            
-            secondsUnit = timerBus.GetComponent<GeneralDataHandler>().secondSecond;
-            secondsDec = timerBus.GetComponent<GeneralDataHandler>().firstSecond;
-            minutesUnit = timerBus.GetComponent<GeneralDataHandler>().secondMinute;
-            minutesDec = timerBus.GetComponent<GeneralDataHandler>().firstMinute;
-            
 
-            this.text = minutesDec.ToString() + minutesUnit.ToString() + ":" + secondsDec.ToString() + secondsUnit.ToString(); ;
+            time = timerBus.GetComponent<GeneralDataHandler>().firstTimeTimer;
+            UpdateTimerDisplay(time);
+
+
+            this.text = minutesDec.ToString() + minutesUnit.ToString() + ":" + secondsDec.ToString() + secondsUnit.ToString();
         }
     }
 
@@ -486,10 +546,75 @@ namespace ODStudy
         public override void Start()
         {
 
-            this.text = "Tiempo:";
+            this.text = "Tiempo 1:";
             this.width = 73;
             this.height = 18;
             this.relativePosition = new Vector3(50, 60);
+
+        }
+
+        public override void Update()
+        {
+
+        }
+    }
+
+    class TimerTime2 : UILabel
+    {
+        public GameObject timerBus;
+
+        int secondsUnit, secondsDec, minutesUnit, minutesDec;
+        float time = 0;
+
+        public override void Start()
+        {
+            timerBus = GameObject.Find("Z General Data Handler");
+
+            secondsUnit = 0;
+            secondsDec = 0;
+            minutesUnit = 0;
+            minutesDec = 0;
+
+            this.text = minutesDec.ToString() + minutesUnit.ToString() + ":" + secondsDec.ToString() + secondsUnit.ToString();
+            this.textColor = new Color32(255, 0, 0, 255);
+            this.width = 73;
+            this.height = 18;
+            this.relativePosition = new Vector3(200, 90);
+
+        }
+
+        public void UpdateTimerDisplay(float time)
+        {
+            float minutes = Mathf.FloorToInt(time / 60);
+            float seconds = Mathf.FloorToInt(time % 60);
+
+            minutesDec = Mathf.FloorToInt(minutes / 10);
+            minutesUnit = Mathf.FloorToInt(minutes % 10);
+            secondsDec = Mathf.FloorToInt(seconds / 10);
+            secondsUnit = Mathf.FloorToInt(seconds % 10);
+
+        }
+
+        public override void Update()
+        {
+            time = timerBus.GetComponent<GeneralDataHandler>().secondTimeTimer;
+            UpdateTimerDisplay(time);
+
+
+            this.text = minutesDec.ToString() + minutesUnit.ToString() + ":" + secondsDec.ToString() + secondsUnit.ToString();
+        }
+    }
+
+    class TimerLabel2 : UILabel
+    {
+
+        public override void Start()
+        {
+
+            this.text = "Tiempo 2:";
+            this.width = 73;
+            this.height = 18;
+            this.relativePosition = new Vector3(50, 90);
 
         }
 

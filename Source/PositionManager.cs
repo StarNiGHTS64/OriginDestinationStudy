@@ -5,7 +5,7 @@ using ColossalFramework;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
 
-namespace ODStudy
+namespace ODStudyF
 {
     public class PositionManager : MonoBehaviour
     {
@@ -14,11 +14,12 @@ namespace ODStudy
         ushort busNum;
         ushort goalNum;
 
-        bool respowneded = false;
 
         public Vector3 busDepotPosition = new Vector3(0f, 0f, 0f);
         public Vector3 busPosition = new Vector3(0f, 0f, 0f);
         public Vector3 goalPosition = new Vector3(0f, 0f, 0f);
+
+        public Vector3 iterationBusPosition = new Vector3(0f, 0f, 0f);
 
         void Start()
         {
@@ -50,7 +51,7 @@ namespace ODStudy
             uint totalBuildings = instance2.m_buildings.m_size;
 
 
-            for (ushort num = 1; num < totalBuildings; num ++)
+            for (ushort num = 1; num < totalBuildings; num++)
             {
                 if ((instance2.m_buildings.m_buffer[(int)num].m_flags & Building.Flags.CustomName) != Building.Flags.None && instance.GetName(new InstanceID
                 {
@@ -97,8 +98,8 @@ namespace ODStudy
                 return;
             }
 
-            for (ushort num = 1; num < totalVehicles; num ++)
-                if(instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+            for (ushort num = 1; num < totalVehicles; num++)
+                if (instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
                 {
 
                     //getPosition
@@ -108,8 +109,58 @@ namespace ODStudy
                     Debug.Log("Hi i am a bus: " + num);
                     Debug.Log("Result: " + instance.SetVehicleName(num, "foo"));
                 }
-            
+
             //
+        }
+
+        public bool LookUpBus()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size;
+
+
+
+            if (totalVehicles == 0)
+            {
+                return false;
+            }
+
+            for (ushort num = 1; num < totalVehicles; num++)
+                if (instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+                {
+                    GetVehiclePosition(num, out iterationBusPosition);
+
+                    if((busDepotPosition - iterationBusPosition).magnitude >= 40f && (busDepotPosition - iterationBusPosition).magnitude <= 60f)
+                    {
+                        Debug.Log("I FOUND ONE: " + num);
+                        Vehicle.Flags flags = instance.m_vehicles.m_buffer[(int)num].m_flags;
+                        //instance.m_vehicles.m_buffer[num].m_flags.SetFlags(Vehicle.Flags.CustomName, true);
+                        instance.m_vehicles.m_buffer[(int)num].m_flags = (flags | Vehicle.Flags.CustomName);
+                        InstanceID id = default(InstanceID);
+                        id.Vehicle = num;
+                        Singleton<InstanceManager>.instance.SetName(id, "TargetBus");
+                        return true;
+                    }
+                }
+            return false;
+        }
+        
+        public bool HasDeparted()
+        {
+            if((busDepotPosition - busPosition).magnitude >= 65f)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool HasReturned()
+        {
+            if((busDepotPosition - busPosition).magnitude <= 55f)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void removeCustomName()
@@ -117,7 +168,11 @@ namespace ODStudy
             VehicleManager instance = Singleton<VehicleManager>.instance;
             Debug.Log("ID: " + busNum);
             Vehicle.Flags flags = instance.m_vehicles.m_buffer[busNum].m_flags;
-            instance.m_vehicles.m_buffer[busNum].m_flags = (flags & ~Vehicle.Flags.CustomName);
+            instance.m_vehicles.m_buffer[(int)busNum].m_flags = (flags & ~Vehicle.Flags.CustomName);
+            instance.m_vehicles.m_buffer[(int)busNum].m_flags = (flags & ~Vehicle.Flags.GoingBack);
+            InstanceID id = default(InstanceID);
+            id.Vehicle = busNum;
+            Singleton<InstanceManager>.instance.SetName(id, "Bus");
             //instance.SetVehicleName(busNum, "Bus");
         }
 
@@ -135,7 +190,7 @@ namespace ODStudy
             Debug.Log("Goal Position: " + goalPosition);  
             Debug.Log("Bus Position: " + busPosition);*/
 
-            return (goalPosition - busPosition).magnitude <= 40f;
+            return (goalPosition - busPosition).magnitude <= 60f;
         }
 
         public void BulldozeStreets()
@@ -148,7 +203,7 @@ namespace ODStudy
                 return;
             }
 
-            
+
         }
 
         public void GetSegmentByName(string segmentName)
@@ -216,6 +271,23 @@ namespace ODStudy
             }
         }
 
+        public void CleanBuses()
+        {
+            VehicleManager instance = Singleton<VehicleManager>.instance;
+            uint totalVehicles = instance.m_vehicles.m_size; ;
+
+            if (totalVehicles == 0)
+            {
+                return;
+            }
+
+            for (ushort num = 1; num < totalVehicles; num++)
+                if (instance.m_vehicles.m_buffer[num].Info.m_Thumbnail == "Bus")
+                {
+                    instance.ReleaseVehicle(num);
+                }
+        }
+
         /*public void CleanParked()
         {
             VehicleManager instance = Singleton<VehicleManager>.instance;
@@ -236,14 +308,7 @@ namespace ODStudy
 
         void Update()
         {
-            //Debug.Log("Has Arrived?: " + hasArriveYet());
-            /*if(hasArriveYet() && !respowneded)
-            {
-                busNum = GetVehicleIDByCustomName("TargetBus");
-                respowneded = true;
-                reRespawn(busNum);
-                
-            }*/
+
         }
     }
 

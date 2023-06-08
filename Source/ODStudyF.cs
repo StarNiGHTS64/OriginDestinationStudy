@@ -3,13 +3,13 @@ using ICities;
 using UnityEngine;
 using ColossalFramework.Plugins;
 
-namespace ODStudy
+namespace ODStudyF
 {
     public class ODStudy : IUserMod
     {
         public string Name
         {
-            get { return "Origin - Destination Study"; }
+            get { return "Origin - Destination StudyF"; }
         }
 
         public string Description

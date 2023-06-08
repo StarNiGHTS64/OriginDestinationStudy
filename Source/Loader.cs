@@ -4,7 +4,7 @@ using UnityEngine;
 using ColossalFramework.Plugins;
 using ColossalFramework.UI;
 
-namespace ODStudy
+namespace ODStudyF
 {
     public class Loader : LoadingExtensionBase
     {
@@ -35,7 +35,7 @@ namespace ODStudy
 
             //This get the default UIView
             UIView view = UIView.GetAView();
-            
+
             //This adds an UIComponent to the view
 
             //GUI Components from Bus State
@@ -70,15 +70,22 @@ namespace ODStudy
             UILabel timerText = (UILabel)attributesUIC.AddUIComponent(typeof(TimerLabel));
             UILabel timerTime = (UILabel)attributesUIC.AddUIComponent(typeof(TimerTime));
 
+            UILabel timerText2 = (UILabel)attributesUIC.AddUIComponent(typeof(TimerLabel2));
+            UILabel timerTime2 = (UILabel)attributesUIC.AddUIComponent(typeof(TimerTime2));
+
             //GUI Components from Final Panel
             UIComponent finalUIC = view.AddUIComponent(typeof(FinalPanel));
             UIDragHandle finalPanelDrag = (UIDragHandle)finalUIC.AddUIComponent(typeof(UIDragHandle));
 
+            UILabel stageLabelName = (UILabel)finalUIC.AddUIComponent(typeof(StageLabelName));
+
             UILabel stageNumber = (UILabel)finalUIC.AddUIComponent(typeof(NumberLabel));
 
             UIButton nextButton = (UIButton)finalUIC.AddUIComponent(typeof(ChangeStageButton));
-            UIButton testButton = (UIButton)finalUIC.AddUIComponent(typeof(TestButton));
+            //UIButton testButton = (UIButton)finalUIC.AddUIComponent(typeof(TestButton));
 
+            UIPanel progressBar = (UIPanel)finalUIC.AddUIComponent(typeof(ProgressBar));
+            UIPanel progressBarFull = (UIPanel)finalUIC.AddUIComponent(typeof(ProgressBarFull));
         }
     }
 
