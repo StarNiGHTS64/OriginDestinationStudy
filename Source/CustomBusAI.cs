@@ -9,7 +9,7 @@ namespace ODStudyF
 {
 	public class CustomBusAI : BusAI
 	{
-		/*public override void SetTarget(ushort vehicleID, ref Vehicle data, ushort targetBuilding)
+		public override void SetTarget(ushort vehicleID, ref Vehicle data, ushort targetBuilding)
 		{
 			if ((data.m_flags & Vehicle.Flags.DummyTraffic) != (Vehicle.Flags)0)
 			{
@@ -49,6 +49,6 @@ namespace ODStudyF
 				Singleton<BuildingManager>.instance.m_buildings.m_buffer[(int)data.m_targetBuilding].RemoveGuestVehicle(vehicleID, ref data);
 				data.m_targetBuilding = 0;
 			}
-		}*/
+		}
 	}
 }
